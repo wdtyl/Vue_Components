@@ -1,0 +1,63 @@
+
+<template>
+    <view class="container">
+        <view class="num">1</view>
+        <button @tap="pathRoute" size="mini">路由及返回</button>
+    </view>
+</template>
+
+<script>
+import wepy from 'wepy';
+import { connect } from 'wepy-redux';
+import NavTo from '../../utils/common';
+
+@connect({
+  num(state) {
+    return state.counter.num;
+  },
+  asyncNum(state) {
+    return state.counter.asyncNum;
+  },
+  sumNum(state) {
+    return state.counter.num + state.counter.asyncNum;
+  }
+})
+export default class page1 extends wepy.page {
+  config = {
+    navigationBarTitleText: 'page1'
+  };
+  components = {};
+
+  mixins = [];
+
+  data = {};
+
+  computed = {
+    now() {
+      return +new Date();
+    }
+  };
+
+  methods = {
+    pathRoute() {
+      NavTo.goPage({ url: 'pages/routePage/page2' });
+    }
+  };
+
+  events = {};
+  onShow() {
+    let getData = data => {
+      console.info(data, '11');
+    };
+    NavTo.inPage(getData);
+  }
+  onLoad() {}
+}
+</script>
+<style lang="less">
+.num {
+  font-size: 32px;
+  font-weight: bold;
+  color: red;
+}
+</style>
